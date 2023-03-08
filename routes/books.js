@@ -2,20 +2,21 @@ var express = require('express');
 var router = express.Router();
 
 const fs = require("fs");
+var books;
+
+fs.readFile("books.json", function(err, data){
+    if (err) {
+        console.log(err);
+    }
+    books = JSON.parse(data)
+    return;
+});
+
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-
-    fs.readFile("books.json", function(err, data){
-        if (err) {
-            console.log(err);
-        }
-
-        const books = JSON.parse(data)
-
         res.send(books)
-        return;
-    });
 });
 
 router.post('/borrow', function(req, res) {
@@ -35,7 +36,7 @@ router.post('/leave', function(req, res){
     let returnedBook = req.body;
 
     books.map(book => {
-        if((book.title).toLowerCase() === (borrowedBook.title).toLowerCase()){
+        if((book.title).toLowerCase() === (returnedBook.title).toLowerCase()){
             book.available = true;
         }
         console.log(books)
