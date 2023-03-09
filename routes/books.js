@@ -19,6 +19,14 @@ router.get('/', function(req, res, next) {
         res.send(books)
 });
 
+router.get('/:id', function(req, res) {
+    let bookId = req.params.id;
+    books[bookId].loanBook();
+    res.json(books[bookId]);
+});
+
+
+
 router.post('/borrow', function(req, res) {
     res.send({message: "works"})
     let borrowedBook = req.body;
@@ -46,10 +54,14 @@ router.post('/leave', function(req, res){
 
 router.post('/add', function (req, res) {
     res.send({message: "Tack för ditt fantastiska tillägg"});
-    let book = req.body;
-    book.id = books.length + 1;
-    book.available = true;
-    books.push(book);
+let newTitle = req.body.title;
+let newAuthor = req.body.author;
+let newPages = req.body.pages;
+let newId = books.length + 1;
+let NewBook = newBook(newTitle, newAuthor, newPages, true, newId);
+books.push(newBook);
+console.log (books);
+books.json(books);
 })
 
 module.exports = router;
