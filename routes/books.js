@@ -12,7 +12,7 @@ fs.readFile("books.json", function(err, data){
     return;
 });
 
-
+console.log(books);
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
